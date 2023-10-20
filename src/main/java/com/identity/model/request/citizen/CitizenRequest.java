@@ -1,5 +1,8 @@
 package com.identity.model.request.citizen;
 
+import com.identity.enums.Gender;
+import com.identity.model.request.aadhar.AadharRequest;
+import com.identity.model.request.simcard.SimCardRequest;
 import com.identity.validation.CountryCodeAlpha3;
 import com.identity.validation.PhoneNumber;
 import jakarta.validation.constraints.Email;
@@ -9,12 +12,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddCitizenRequest {
+public class CitizenRequest {
 
     @NotBlank(message = "First name can't be null or blank")
     private String firstName;
@@ -22,7 +27,7 @@ public class AddCitizenRequest {
     @NotBlank(message = "Last name can't be null or blank")
     private String lastName;
 
-    @NotBlank(message = "Phone number can't be null or blank")
+    @NotBlank(message = "Email number can't be null or blank")
     @Email
     private String email;
 
@@ -35,4 +40,7 @@ public class AddCitizenRequest {
     @CountryCodeAlpha3
     private String country;
 
+    private Gender gender;
+    private AadharRequest aadhar;
+    private List<SimCardRequest> simCards;
 }

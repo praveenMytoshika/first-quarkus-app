@@ -1,6 +1,6 @@
 package com.identity.resource;
 
-import com.identity.model.request.citizen.AddCitizenRequest;
+import com.identity.model.request.citizen.CitizenRequest;
 import com.identity.model.response.citizen.CitizenResponse;
 import com.identity.model.response.generic.BaseResponse;
 import com.identity.service.CitizenService;
@@ -13,6 +13,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import org.jboss.resteasy.reactive.ResponseStatus;
 
 @Path("/api/citizens")
 @AllArgsConstructor
@@ -22,9 +23,10 @@ public class CitizenResource {
 
     // CREATE CITIZEN API
     @POST
+    @ResponseStatus(201)
     @Operation(description = "Add Citizen Request", summary = "Add Citizen")
     @APIResponses(value = { @APIResponse(responseCode = "201", description = "Citizen Created") })
-    public BaseResponse<Object> addCitizen(@Valid AddCitizenRequest request) {
+    public BaseResponse<Object> addCitizen(@Valid CitizenRequest request) {
         return BaseResponse.builder()
                 .successMsg("Citizen Created")
                 .data(citizenService.addCitizen(request))
@@ -37,10 +39,10 @@ public class CitizenResource {
     @Operation(description = "Update Citizen Request", summary = "Update Citizen")
     @APIResponses(value = { @APIResponse(responseCode = "200", description = "Citizen Updated") })
     public BaseResponse<Object> updatedCitizen(
-            @PathParam("citizenId") Long citizenId, AddCitizenRequest request
+            @PathParam("citizenId") Long citizenId, CitizenRequest request
     ) {
         return BaseResponse.builder()
-                .successMsg("Citizen Fetched")
+                .successMsg("Citizen Updated")
                 .data(citizenService.updateCitizen(citizenId, request))
                 .build();
     }

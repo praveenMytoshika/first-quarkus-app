@@ -1,12 +1,18 @@
 package com.identity.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import com.identity.enums.Gender;
+import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+import java.util.Collections;
+import java.util.List;
+
+import static java.util.Collections.emptyList;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -19,6 +25,18 @@ public class Citizen extends AbstractEntity {
     @Column(length = 10)
     private Long phone;
     private String country;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @Builder.Default
     private boolean isActive = true;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "citizen", orphanRemoval = true)
+    private Aadhar aadhar;
+
+    @Builder.Default
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "citizen")
+    private List<SimCard> simCards = emptyList();
 
 }
