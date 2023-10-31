@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AadharRequest {
+public class AadharAddRequest {
     private Long aadharNumber;
 
     @Builder.Default

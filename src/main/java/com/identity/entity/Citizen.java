@@ -37,6 +37,6 @@ public class Citizen extends AbstractEntity {
 
     @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "citizen")
-    private List<SimCard> simCards = emptyList();
+    public List<SimCard> simCards = emptyList();
 
 }

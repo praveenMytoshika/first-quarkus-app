@@ -14,8 +14,8 @@ import org.mockito.Mockito;
 import java.util.List;
 import java.util.Optional;
 
-import static com.identity.TestDataBuilder.*;
-import static com.identity.TestDataBuilder.buildAddCitizenRequest;
+import static com.identity.CitizenDataBuilder.*;
+import static com.identity.CitizenDataBuilder.buildAddCitizenRequest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -34,7 +34,7 @@ public class CitizenServiceTest {
     void testAddCitizen_withSuccess() {
         // Arrange
         Citizen citizen = buildCitizen_1();
-        citizen.getAadhar().setCitizen(citizen);
+       // citizen.getAadhar().setCitizen(citizen);
         Mockito.when(citizenRepository.findByEmail(buildAddCitizenRequest().getEmail())).thenReturn(Optional.empty());
         Mockito.doNothing().when(citizenRepository).persist(citizen);
         Mockito.when(citizenRepository.isPersistent(citizen)).thenReturn(true);
@@ -66,7 +66,7 @@ public class CitizenServiceTest {
         Mockito.when(citizenRepository.isPersistent(citizen)).thenReturn(true);
 
         // Act
-        boolean result = citizenService.updateCitizen(citizenId, buildAddCitizenRequest());
+        boolean result = citizenService.updateCitizen(citizenId, buildUpdateCitizenRequest());
 
         // Assert
         assertThat(result).isTrue();
@@ -81,7 +81,7 @@ public class CitizenServiceTest {
         Mockito.when(citizenRepository.findByIdOptional(citizenId)).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThrows(NotFoundException.class, () -> citizenService.updateCitizen(citizenId, buildAddCitizenRequest()));
+        assertThrows(NotFoundException.class, () -> citizenService.updateCitizen(citizenId, buildUpdateCitizenRequest()));
     }
 
     @Test

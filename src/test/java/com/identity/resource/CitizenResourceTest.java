@@ -11,7 +11,7 @@ import org.mockito.Mockito;
 
 import java.util.Collections;
 
-import static com.identity.TestDataBuilder.*;
+import static com.identity.CitizenDataBuilder.*;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
@@ -41,11 +41,11 @@ public class CitizenResourceTest {
     @Test
     void testUpdateCitizen_withSuccess() throws JsonProcessingException {
         // Arrange
-        Mockito.when(citizenService.updateCitizen(citizenId, buildAddCitizenRequest())).thenReturn(true);
+        Mockito.when(citizenService.updateCitizen(citizenId, buildUpdateCitizenRequest())).thenReturn(true);
 
         // Act & Assert
         given()
-                .body(objectMapper.writeValueAsString(buildAddCitizenRequest()))
+                .body(objectMapper.writeValueAsString(buildUpdateCitizenRequest()))
                 .contentType(ContentType.JSON)
                 .pathParam("citizenId", citizenId)
                 .when()

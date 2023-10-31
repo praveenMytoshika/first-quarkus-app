@@ -1,8 +1,8 @@
 package com.identity.model.request.citizen;
 
 import com.identity.enums.Gender;
-import com.identity.model.request.aadhar.AadharRequest;
-import com.identity.model.request.simcard.SimCardRequest;
+import com.identity.model.request.aadhar.AadharAddRequest;
+import com.identity.model.request.simcard.SimCardAddRequest;
 import com.identity.validation.CountryCodeAlpha3;
 import com.identity.validation.PhoneNumber;
 import jakarta.validation.constraints.Email;
@@ -19,7 +19,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CitizenRequest {
+public class CitizenAddRequest {
 
     @NotBlank(message = "First name can't be null or blank")
     private String firstName;
@@ -41,6 +41,6 @@ public class CitizenRequest {
     private String country;
 
     private Gender gender;
-    private AadharRequest aadhar;
-    private List<SimCardRequest> simCards;
+    private AadharAddRequest aadhar;
+    public List<SimCardAddRequest> simCards;
 }

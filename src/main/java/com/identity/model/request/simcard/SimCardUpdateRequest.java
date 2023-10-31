@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SimCardRequest {
+public class SimCardUpdateRequest {
+    private Long id;
     private Long number;
     private SimCardProvider provider;
 }

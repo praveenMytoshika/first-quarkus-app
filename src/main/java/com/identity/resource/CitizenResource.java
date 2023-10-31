@@ -1,6 +1,7 @@
 package com.identity.resource;
 
-import com.identity.model.request.citizen.CitizenRequest;
+import com.identity.model.request.citizen.CitizenAddRequest;
+import com.identity.model.request.citizen.CitizenUpdateRequest;
 import com.identity.model.response.citizen.CitizenResponse;
 import com.identity.model.response.generic.BaseResponse;
 import com.identity.service.CitizenService;
@@ -26,7 +27,7 @@ public class CitizenResource {
     @ResponseStatus(201)
     @Operation(description = "Add Citizen Request", summary = "Add Citizen")
     @APIResponses(value = { @APIResponse(responseCode = "201", description = "Citizen Created") })
-    public BaseResponse<Object> addCitizen(@Valid CitizenRequest request) {
+    public BaseResponse<Object> addCitizen(@Valid CitizenAddRequest request) {
         return BaseResponse.builder()
                 .successMsg("Citizen Created")
                 .data(citizenService.addCitizen(request))
@@ -39,7 +40,7 @@ public class CitizenResource {
     @Operation(description = "Update Citizen Request", summary = "Update Citizen")
     @APIResponses(value = { @APIResponse(responseCode = "200", description = "Citizen Updated") })
     public BaseResponse<Object> updatedCitizen(
-            @PathParam("citizenId") Long citizenId, CitizenRequest request
+            @PathParam("citizenId") Long citizenId, CitizenUpdateRequest request
     ) {
         return BaseResponse.builder()
                 .successMsg("Citizen Updated")

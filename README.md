@@ -1,3 +1,11 @@
+1. CRUD API
+2. API to Prepare Large Excel sheets
+3. Exception Handling
+4. Table Mapping
+5. Mapstruct
+6. Flyway
+7. Custom Annotations For Validation
+
 # first-quarkus-app
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.

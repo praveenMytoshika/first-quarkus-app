@@ -4,7 +4,8 @@ import com.identity.entity.Citizen;
 import com.identity.exception.BadRequestException;
 import com.identity.exception.NotFoundException;
 import com.identity.mapper.CitizenMapper;
-import com.identity.model.request.citizen.CitizenRequest;
+import com.identity.model.request.citizen.CitizenAddRequest;
+import com.identity.model.request.citizen.CitizenUpdateRequest;
 import com.identity.model.response.citizen.CitizenResponse;
 import com.identity.repository.CitizenRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -23,7 +24,7 @@ public class CitizenService {
 
     // ADD/CREATE CITIZEN
     @Transactional
-    public boolean addCitizen(CitizenRequest request) {
+    public boolean addCitizen(CitizenAddRequest request) {
         Optional<Citizen> citizenOpt = citizenRepository.findByEmail(request.getEmail());
         if (citizenOpt.isPresent()) throw new BadRequestException("Citizen email already exist");
 
@@ -35,12 +36,12 @@ public class CitizenService {
 
     // UPDATE CITIZEN
     @Transactional
-    public boolean updateCitizen(Long citizenId, CitizenRequest request) {
+    public boolean updateCitizen(Long citizenId, CitizenUpdateRequest request) {
         Citizen citizen =
                 citizenRepository.findByIdOptional(citizenId)
                         .orElseThrow(() -> new NotFoundException("Citizen not found"));
 
-        Citizen updatedCitizen = mapToCitizen(request, citizen);
+        Citizen updatedCitizen = citizenMapper.mapToCitizen(request, citizen, citizen.getEmail());
 
         citizenRepository.persist(updatedCitizen);
         return citizenRepository.isPersistent(updatedCitizen);
@@ -71,17 +72,11 @@ public class CitizenService {
         return citizenRepository.deleteById(citizenId);
     }
 
-    private Citizen mapToCitizen(CitizenRequest request) {
+    private Citizen mapToCitizen(CitizenAddRequest request) {
         Citizen newCitizen = citizenMapper.mapToCitizen(request);
         citizenMapper.mapToAadhar(newCitizen, newCitizen.getAadhar());
         newCitizen.getSimCards().forEach(simCard -> citizenMapper.mapToSimCard(newCitizen, simCard));
         return newCitizen;
     }
 
-    private Citizen mapToCitizen(CitizenRequest request, Citizen citizen) {
-        Citizen updatedCitizen = citizenMapper.mapToCitizen(request, citizen, citizen.getEmail());
-        citizenMapper.mapToAadhar(updatedCitizen, updatedCitizen.getAadhar());
-        updatedCitizen.getSimCards().forEach(simCard -> citizenMapper.mapToSimCard(updatedCitizen, simCard));
-        return updatedCitizen;
-    }
 }
