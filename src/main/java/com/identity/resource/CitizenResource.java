@@ -5,6 +5,7 @@ import com.identity.model.request.citizen.CitizenUpdateRequest;
 import com.identity.model.response.citizen.CitizenResponse;
 import com.identity.model.response.generic.BaseResponse;
 import com.identity.service.CitizenService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ public class CitizenResource {
     // CREATE CITIZEN API
     @POST
     @ResponseStatus(201)
+    @RolesAllowed({"admin", "citizen"})
     @Operation(description = "Add Citizen Request", summary = "Add Citizen")
     @APIResponses(value = { @APIResponse(responseCode = "201", description = "Citizen Created") })
     public BaseResponse<Object> addCitizen(@Valid CitizenAddRequest request) {
@@ -37,6 +39,7 @@ public class CitizenResource {
     // UPDATE CITIZEN API
     @PUT
     @Path("/{citizenId}")
+    @RolesAllowed({"admin", "citizen"})
     @Operation(description = "Update Citizen Request", summary = "Update Citizen")
     @APIResponses(value = { @APIResponse(responseCode = "200", description = "Citizen Updated") })
     public BaseResponse<Object> updatedCitizen(
@@ -51,6 +54,7 @@ public class CitizenResource {
     // FETCH CITIZEN API
     @GET
     @Path("/{citizenId}")
+    @RolesAllowed({"admin", "citizen"})
     @Operation(description = "Fetch Citizen", summary = "Fetch Citizen")
     @APIResponses(value = { @APIResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = CitizenResponse.class))})})
     public BaseResponse<Object> getCitizen(@PathParam("citizenId") Long citizenId) {
@@ -62,6 +66,7 @@ public class CitizenResource {
 
     // FETCH ALL CITIZENS API
     @GET
+    @RolesAllowed({"admin", "citizen"})
     @Operation(description = "Fetch All Citizens", summary = "Fetch All Citizens")
     @APIResponses(value = { @APIResponse(responseCode = "200", content = { @Content(schema = @Schema(type = SchemaType.ARRAY, implementation = CitizenResponse.class))})})
     public BaseResponse<Object> getAllCitizens() {
@@ -74,6 +79,7 @@ public class CitizenResource {
     // DELETE CITIZEN API
     @DELETE
     @Path("/{citizenId}")
+    @RolesAllowed("admin")
     @Operation(description = "Delete Citizen", summary = "Delete Citizen")
     @APIResponses(value = { @APIResponse(responseCode = "200", description = "Citizen Deleted") })
     public BaseResponse<Object> deleteCitizen(@PathParam("citizenId") Long citizenId) {

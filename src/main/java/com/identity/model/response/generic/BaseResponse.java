@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Builder
-@JsonInclude(value = JsonInclude.Include.NON_EMPTY)
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class BaseResponse<T> {
 	String successMsg;
 
@@ -16,6 +16,4 @@ public class BaseResponse<T> {
 
 	T data;
 	String errorMsg;
-	String error;
-	String token;
 }
